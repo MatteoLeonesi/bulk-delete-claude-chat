@@ -1,4 +1,6 @@
 (async () => {
+  const BULK_DELETE_SIZE = 100;
+  const SINGLE_DELETE_CONCURRENCY = 8;
   const log = message => console.log(`[claude-bulk-delete] ${message}`);
 
   const api = async (path, opts = {}) => {
@@ -17,6 +19,50 @@
       }
     }
     return { ok: r.ok, status: r.status, data };
+  };
+
+  const singleDelete = async (org, convo) => {
+    const first = await api(`/organizations/${org.uuid}/chat_conversations/${convo.uuid}`, {
+      method: 'DELETE',
+      body: JSON.stringify(convo.uuid),
+    });
+    if (first.ok) return true;
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    const second = await api(`/organizations/${org.uuid}/chat_conversations/${convo.uuid}`, {
+      method: 'DELETE',
+      body: JSON.stringify(convo.uuid),
+    });
+    return second.ok;
+  };
+
+  const deleteOneByOne = async (org, convos) => {
+    let cursor = 0;
+    let completed = 0;
+    let failed = 0;
+
+    const worker = async () => {
+      for (;;) {
+        const index = cursor;
+        cursor += 1;
+        if (index >= convos.length) return;
+
+        const ok = await singleDelete(org, convos[index]);
+        completed += 1;
+        if (!ok) failed += 1;
+
+        if (completed % 10 === 0 || completed === convos.length) {
+          log(`"${org.name}": deleted ${completed}/${convos.length} conversations${failed ? `, ${failed} failed` : ''}...`);
+        }
+      }
+    };
+
+    await Promise.all(
+      Array.from({ length: Math.min(SINGLE_DELETE_CONCURRENCY, convos.length) }, worker),
+    );
+
+    return { completed, failed };
   };
 
   log('Loading organizations...');
@@ -40,28 +86,29 @@
 
     if (!confirm(`"${org.name}": delete ${convos.length} conversations permanently?`)) continue;
 
-    log(`"${org.name}": sending bulk delete request for ${convos.length} conversations...`);
-    const bulk = await api(`/organizations/${org.uuid}/chat_conversations/delete_many`, {
-      method: 'POST',
-      body: JSON.stringify({ conversation_uuids: convos.map(c => c.uuid) }),
-    });
+    let deleted = 0;
+    let failed = 0;
 
-    if (!bulk.ok) {
-      log(`"${org.name}": bulk delete failed (${bulk.status}), deleting one by one...`);
-      for (const [index, c] of convos.entries()) {
-        await api(`/organizations/${org.uuid}/chat_conversations/${c.uuid}`, {
-          method: 'DELETE',
-          body: JSON.stringify(c.uuid),
-        });
-        if ((index + 1) % 10 === 0 || index + 1 === convos.length) {
-          log(`"${org.name}": deleted ${index + 1}/${convos.length} conversations...`);
-        }
-        await new Promise(r => setTimeout(r, 250));
+    for (let i = 0; i < convos.length; i += BULK_DELETE_SIZE) {
+      const batch = convos.slice(i, i + BULK_DELETE_SIZE);
+      log(`"${org.name}": bulk deleting ${i + 1}-${i + batch.length}/${convos.length}...`);
+
+      const bulk = await api(`/organizations/${org.uuid}/chat_conversations/delete_many`, {
+        method: 'POST',
+        body: JSON.stringify({ conversation_uuids: batch.map(c => c.uuid) }),
+      });
+
+      if (bulk.ok) {
+        deleted += batch.length;
+        log(`"${org.name}": deleted ${deleted}/${convos.length} conversations...`);
+      } else {
+        log(`"${org.name}": bulk batch failed (${bulk.status}), deleting this batch with ${SINGLE_DELETE_CONCURRENCY} parallel requests...`);
+        const result = await deleteOneByOne(org, batch);
+        deleted += result.completed;
+        failed += result.failed;
       }
-    } else {
-      log(`"${org.name}": bulk delete accepted.`);
     }
-    log(`"${org.name}": done (${convos.length}).`);
+    log(`"${org.name}": done (${deleted}/${convos.length}${failed ? `, ${failed} failed` : ''}).`);
   }
   log('Finished - reload the page.');
 })();
