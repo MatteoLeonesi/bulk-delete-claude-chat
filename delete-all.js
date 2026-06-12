@@ -1,24 +1,35 @@
 (async () => {
-  const BULK_DELETE_SIZE = 100;
-  const SINGLE_DELETE_CONCURRENCY = 8;
+  const BULK_DELETE_SIZE = 25;
+  const SINGLE_DELETE_CONCURRENCY = 10;
+  const REQUEST_TIMEOUT_MS = 15000;
   const log = message => console.log(`[claude-bulk-delete] ${message}`);
 
   const api = async (path, opts = {}) => {
-    const r = await fetch('https://claude.ai/api' + path, {
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      ...opts,
-    });
-    const text = await r.text();
-    let data = null;
-    if (text) {
-      try {
-        data = JSON.parse(text);
-      } catch {
-        data = text;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    try {
+      const r = await fetch('https://claude.ai/api' + path, {
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        ...opts,
+        signal: controller.signal,
+      });
+      const text = await r.text();
+      let data = null;
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = text;
+        }
       }
+      return { ok: r.ok, status: r.status, data };
+    } catch (error) {
+      return { ok: false, status: error.name === 'AbortError' ? 'timeout' : 'network-error', data: null };
+    } finally {
+      clearTimeout(timeout);
     }
-    return { ok: r.ok, status: r.status, data };
   };
 
   const singleDelete = async (org, convo) => {
