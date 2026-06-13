@@ -1,4 +1,6 @@
-Delete **all** your claude.ai conversations at once, i created it because the "Select all" button on `/recents` only covers the rows rendered on screen. This script calls the internal API instead, so it gets everything.
+Delete **all** your claude.ai conversations at once, i created it because the "Select all" button on `/recents` only covers the rows rendered on screen. 
+
+⚠️ These are internal Claude.ai web app endpoints, not public documented Anthropic APIs. They were inferred from browser network requests and may change or stop working at any time.
 
 ### How to
 - Open https://claude.ai/recents and press `F12` → **Console**
