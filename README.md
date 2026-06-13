@@ -6,3 +6,5 @@ Delete **all** your claude.ai conversations at once, i created it because the "S
 - Confirm the dialog (one per organization)
 - ⚠️ Be patient: conversations disappear from the UI **slowly, over several minutes**; that's normal
 - ⚠️ Keep the claude.ai tab open until the console shows `Finished`; closing, refreshing, or navigating away from the page can stop the deletion process.
+
+[![Show HN](https://img.shields.io/badge/Show%20HN-discussion-ff6600?logo=ycombinator&logoColor=white)](https://news.ycombinator.com/item?id=48505161)
