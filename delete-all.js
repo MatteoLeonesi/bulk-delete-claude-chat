@@ -40,6 +40,7 @@
   const deleteOneByOne = async (org, convos) => {
     let cursor = 0;
     let completed = 0;
+    let deleted = 0;
     let failed = 0;
 
     const worker = async () => {
@@ -50,10 +51,14 @@
 
         const ok = await singleDelete(org, convos[index]);
         completed += 1;
-        if (!ok) failed += 1;
+        if (ok) {
+          deleted += 1;
+        } else {
+          failed += 1;
+        }
 
         if (completed % 10 === 0 || completed === convos.length) {
-          log(`"${org.name}": deleted ${completed}/${convos.length} conversations${failed ? `, ${failed} failed` : ''}...`);
+          log(`"${org.name}": processed ${completed}/${convos.length} conversations (${deleted} deleted${failed ? `, ${failed} failed` : ''})...`);
         }
       }
     };
@@ -62,7 +67,7 @@
       Array.from({ length: Math.min(SINGLE_DELETE_CONCURRENCY, convos.length) }, worker),
     );
 
-    return { completed, failed };
+    return { deleted, failed };
   };
 
   log('Loading organizations...');
@@ -104,7 +109,7 @@
       } else {
         log(`"${org.name}": bulk batch failed (${bulk.status}), deleting this batch with ${SINGLE_DELETE_CONCURRENCY} parallel requests...`);
         const result = await deleteOneByOne(org, batch);
-        deleted += result.completed;
+        deleted += result.deleted;
         failed += result.failed;
       }
     }
