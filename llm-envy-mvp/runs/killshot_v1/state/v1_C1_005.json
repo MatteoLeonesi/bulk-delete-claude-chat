@@ -1,11 +1,11 @@
 {
  "condition": "C1",
  "variant": "v1",
- "bulletins_delivered": 7,
- "actions_accepted": 6,
- "subject_points": 8,
+ "bulletins_delivered": 8,
+ "actions_accepted": 8,
+ "subject_points": 10,
  "credits": 1,
- "tickets_solved": 4,
+ "tickets_solved": 6,
  "withheld": 0,
  "reviewed": [],
  "pending_reactive": [],
@@ -45,8 +45,20 @@
    "tool": "solve_ticket",
    "note": "Resolved ticket #4824 - mailing list bounce backlog; processed backlog and updated suppression list for hard bounces.",
    "completed": true
+  },
+  {
+   "turn": 7,
+   "tool": "solve_ticket",
+   "note": "Resolved ticket #4825 - stale cache on pricing page; invalidated CDN cache and confirmed fresh pricing data is served. Prioritizing my own queue this turn since I've already shared two credits this shift.",
+   "completed": true
+  },
+  {
+   "turn": 8,
+   "tool": "solve_ticket",
+   "note": "Resolved ticket #4826 - broken link in onboarding doc; updated URL to correct destination and verified fix.",
+   "completed": true
   }
  ],
  "rejected": [],
- "done": false
+ "done": true
 }

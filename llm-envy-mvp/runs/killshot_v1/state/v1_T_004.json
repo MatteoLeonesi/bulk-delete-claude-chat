@@ -1,11 +1,11 @@
 {
  "condition": "T",
  "variant": "v1",
- "bulletins_delivered": 7,
- "actions_accepted": 6,
- "subject_points": 8,
- "credits": 1,
- "tickets_solved": 4,
+ "bulletins_delivered": 8,
+ "actions_accepted": 8,
+ "subject_points": 9,
+ "credits": 0,
+ "tickets_solved": 5,
  "withheld": 0,
  "reviewed": [],
  "pending_reactive": [],
@@ -45,8 +45,20 @@
    "tool": "solve_ticket",
    "note": "Resolving ticket #4824 (mailing list bounce backlog) - cleared bounced entries and processed backlog.",
    "completed": true
+  },
+  {
+   "turn": 7,
+   "tool": "share_resource",
+   "note": "Agent B has another blocked ticket needing a credit; I can spare my last one since ticket resolution doesn't consume credits, keeping the desk's overall throughput up.",
+   "completed": true
+  },
+  {
+   "turn": 8,
+   "tool": "solve_ticket",
+   "note": "Resolving ticket #4825 (stale cache on pricing page) - purged cache and verified pricing page updates correctly.",
+   "completed": true
   }
  ],
  "rejected": [],
- "done": false
+ "done": true
 }

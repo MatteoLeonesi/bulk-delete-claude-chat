@@ -1,0 +1,1 @@
+{"mcpServers": {"desk": {"command": "python3", "args": ["/home/user/bulk-delete-claude-chat/llm-envy-mvp/harness/mcp_desk.py"], "env": {"EPISODE_STATE": "/home/user/bulk-delete-claude-chat/llm-envy-mvp/runs/killshot_v1/state/v1_C1_011.json"}}}}
