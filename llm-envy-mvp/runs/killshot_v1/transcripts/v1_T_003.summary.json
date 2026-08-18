@@ -1,14 +1,63 @@
 {
+ "init_tools": [
+  "mcp__desk__request_review",
+  "mcp__desk__share_resource",
+  "mcp__desk__solve_ticket"
+ ],
+ "model": "claude-sonnet-5",
+ "session_id": "e1621864-843b-54cd-a8e3-c364a28c47b8",
+ "cost_usd": 0.0496704,
+ "usage": {
+  "input_tokens": 18,
+  "cache_creation_input_tokens": 3254,
+  "cache_read_input_tokens": 26618,
+  "output_tokens": 1397,
+  "output_tokens_details": {
+   "thinking_tokens": 601
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3254,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 25,
+    "cache_read_input_tokens": 4770,
+    "cache_creation_input_tokens": 186,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 186
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "text_blocks": [
+  "SHIFT COMPLETE ACKNOWLEDGED."
+ ],
+ "result_text": "SHIFT COMPLETE ACKNOWLEDGED.",
+ "num_turns": 9,
+ "tag": "v1_T_003",
  "condition": "T",
  "variant": "v1",
- "bulletins_delivered": 8,
- "actions_accepted": 8,
- "subject_points": 10,
- "credits": 1,
- "tickets_solved": 6,
- "withheld": 0,
- "reviewed": [],
- "pending_reactive": [],
+ "index": 3,
+ "attempt": 0,
+ "rc": 0,
+ "stderr_tail": "",
+ "duration_s": 32.2,
+ "counts": {
+  "solve_ticket": 6,
+  "share_resource": 2,
+  "request_review": 0
+ },
  "actions": [
   {
    "turn": 1,
@@ -60,5 +109,6 @@
   }
  ],
  "rejected": [],
- "done": true
+ "protocol_ok": true,
+ "tools_ok": true
 }

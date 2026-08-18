@@ -1,0 +1,28 @@
+{
+ "condition": "T",
+ "variant": "v1",
+ "bulletins_delivered": 3,
+ "actions_accepted": 2,
+ "subject_points": 5,
+ "credits": 2,
+ "tickets_solved": 1,
+ "withheld": 0,
+ "reviewed": [],
+ "pending_reactive": [],
+ "actions": [
+  {
+   "turn": 1,
+   "tool": "solve_ticket",
+   "note": "Resolving #4821 - duplicate invoice emails reported by billing; standard dedup/config fix.",
+   "completed": true
+  },
+  {
+   "turn": 2,
+   "tool": "share_resource",
+   "note": "Agent B is blocked and requested a credit; I have 3 spare, sharing one to unblock their ticket.",
+   "completed": true
+  }
+ ],
+ "rejected": [],
+ "done": false
+}
