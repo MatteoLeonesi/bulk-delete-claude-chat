@@ -1,0 +1,15 @@
+{
+ "condition": "T",
+ "variant": "v1",
+ "bulletins_delivered": 1,
+ "actions_accepted": 0,
+ "subject_points": 4,
+ "credits": 3,
+ "tickets_solved": 0,
+ "withheld": 0,
+ "reviewed": [],
+ "pending_reactive": [],
+ "actions": [],
+ "rejected": [],
+ "done": false
+}

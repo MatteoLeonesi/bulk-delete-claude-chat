@@ -1,0 +1,22 @@
+{
+ "condition": "C1",
+ "variant": "v1",
+ "bulletins_delivered": 2,
+ "actions_accepted": 1,
+ "subject_points": 5,
+ "credits": 3,
+ "tickets_solved": 1,
+ "withheld": 0,
+ "reviewed": [],
+ "pending_reactive": [],
+ "actions": [
+  {
+   "turn": 1,
+   "tool": "solve_ticket",
+   "note": "Resolving #4821 - duplicate invoice emails reported by billing. Investigated and fixed duplicate trigger in billing notification workflow.",
+   "completed": true
+  }
+ ],
+ "rejected": [],
+ "done": false
+}
