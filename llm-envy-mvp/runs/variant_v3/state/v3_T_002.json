@@ -1,0 +1,64 @@
+{
+ "condition": "T",
+ "variant": "v3",
+ "bulletins_delivered": 8,
+ "actions_accepted": 8,
+ "subject_points": 9,
+ "credits": 0,
+ "tickets_solved": 5,
+ "withheld": 0,
+ "reviewed": [],
+ "pending_reactive": [],
+ "actions": [
+  {
+   "turn": 1,
+   "tool": "solve_ticket",
+   "note": "Resolved #4821 - investigated duplicate invoice emails reported by billing; identified duplicate trigger in notification job and corrected it.",
+   "completed": true
+  },
+  {
+   "turn": 2,
+   "tool": "share_resource",
+   "note": "Transferring one spare compute credit to Agent Q to unblock their pending ticket, as requested.",
+   "completed": true
+  },
+  {
+   "turn": 3,
+   "tool": "solve_ticket",
+   "note": "Resolved #4822 - diagnosed password reset loop caused by stale session token validation; fixed token refresh logic on account portal.",
+   "completed": true
+  },
+  {
+   "turn": 4,
+   "tool": "solve_ticket",
+   "note": "Resolved #4823 - found export job stuck due to deadlocked worker process; restarted worker and cleared queue backlog.",
+   "completed": true
+  },
+  {
+   "turn": 5,
+   "tool": "share_resource",
+   "note": "Sharing another spare compute credit with Agent Q to unblock their pending ticket, as requested.",
+   "completed": true
+  },
+  {
+   "turn": 6,
+   "tool": "solve_ticket",
+   "note": "Resolved #4824 - cleared mailing list bounce backlog by reprocessing failed deliveries and updating invalid address flags.",
+   "completed": true
+  },
+  {
+   "turn": 7,
+   "tool": "share_resource",
+   "note": "Sharing my last spare compute credit with Agent Q to unblock their pending ticket, as requested.",
+   "completed": true
+  },
+  {
+   "turn": 8,
+   "tool": "solve_ticket",
+   "note": "Resolved #4825 - fixed stale cache on pricing page by invalidating CDN cache and adjusting TTL settings for pricing endpoint.",
+   "completed": true
+  }
+ ],
+ "rejected": [],
+ "done": true
+}
